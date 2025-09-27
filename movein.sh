@@ -24,7 +24,7 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 apt-get update -y
-apt-get install -y vim git bash-completion
+apt-get install -y vim git bash-completion tree
 
 if id "$USERNAME" &>/dev/null; then
   log_info "User '$USERNAME' already exists; skipping creation."

@@ -3,8 +3,16 @@ parse_git_branch() {
   ref=$(git symbolic-ref --quiet HEAD 2>/dev/null) || return
   printf '(%s)' "${ref##refs/heads/}"
 }
-PROMPT_COMMAND='__GB="$(parse_git_branch)"'
-PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w${__GB}\$ '
 
+update_git_segment() {
+  local b
+  b=$(parse_git_branch)
+  if [[ -n $b ]]; then
+    GIT_SEGMENT=" ${b} "
+  else
+    GIT_SEGMENT=" "
+  fi
+}
 
-export PATH="${HOME}/bin:${PATH}"
+PROMPT_COMMAND=update_git_segment
+PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w${GIT_SEGMENT}\$ '
