@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-THIS=$(realpath $0)
-HERE=$(dirname $THIS)
+NO_COLOR="\033[0m"
+INFO_COLOR="\033[1;32m"
+ERR_COLOR="\033[0;31m"
 
-source $HERE/lib/logging.sh
+function log_info() {
+  echo -e "${INFO_COLOR}$1${NO_COLOR}"
+}
+
+function log_error() {
+  echo -e "${ERR_COLOR}$1${NO_COLOR}"
+}
 
 USERNAME="${1:-hirednoobs}"
 REPO_URL="https://github.com/HiredNoobs/bin.git"
