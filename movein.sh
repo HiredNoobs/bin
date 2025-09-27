@@ -17,9 +17,12 @@ apt-get install -y vim git bash-completion
 if id "$USERNAME" &>/dev/null; then
   echo "User '$USERNAME' already exists; skipping creation."
 else
-  adduser --gecos "" "$USERNAME"
+  adduser --gecos "" --disabled-password "$USERNAME"
   usermod -aG sudo "$USERNAME"
   echo "Created user '$USERNAME' and added to sudo group."
+  echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > "/etc/sudoers.d/$USERNAME"
+  chmod 0440 "/etc/sudoers.d/$USERNAME"
+  echo "Update the password for '$USERNAME' manually with 'passwd $USERNAME'."
 fi
 
 if [[ -d "$BIN_DIR/.git" ]]; then
