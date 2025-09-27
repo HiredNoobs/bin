@@ -25,6 +25,8 @@ function configure_docker() {
     -o /usr/local/lib/docker/cli-plugins/docker-compose
   chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
   log_info "Installed Docker Compose $docker_compose_version"
+
+  systemctl enable docker --now
 }
 
 function configure_vim() {
