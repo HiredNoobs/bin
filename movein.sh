@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# movein.sh duplicates lib/logging.sh because it has to.
+# Without these the script couldn't be curl'd for initial setup.
 NO_COLOR="\033[0m"
 INFO_COLOR="\033[1;32m"
 ERR_COLOR="\033[0;31m"

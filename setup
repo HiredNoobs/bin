@@ -1,4 +1,31 @@
 #!/usr/bin/env bash
+#
+# This script will install and configure a given program.
+#
+# Usage:
+# setup COMMAND
+
+THIS=$(realpath $0)
+HERE=$(dirname $THIS)
+
+source $HERE/lib/logging.sh
+source $HERE/lib/utils.sh
+
+function configure_docker() {
+  local docker_version docker_compose_version
+  docker_version=$(get_latest_release "moby/moby")
+  docker_compose_version=$(get_latest_release "docker/compose")
+
+  log_info "Installing Docker $docker_version."
+  sh <(curl -fsSL https://get.docker.com)
+  log_info Installed Docker $docker_version
+
+  log_info "Installing Docker Compose $docker_compose_version"
+  curl -fsSL "https://github.com/docker/compose/releases/download/${docker_compose_version}/docker-compose-$(uname -s)-$(uname -m)" \
+    -o /usr/local/lib/docker/cli-plugins/docker-compose
+  chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+  log_info "Installed Docker Compose $docker_compose_version"
+}
 
 function configure_vim() {
   mkdir -p ~/.vim/autoload ~/.vim/bundle
@@ -10,6 +37,15 @@ function configure_vim() {
   git clone https://tpope.io/vim/fugitive.git ~/.vim/bundle/fugitive
   git clone https://github.com/mhinz/vim-signify.git ~/.vim/bundle/vim-signify
 }
+
+configure_help() {
+  log_info "The following commands can be used to configure the system:"
+  local fn
+  for fn in $(compgen -A function configure_); do
+    echo "${fn#configure_}"
+  done
+}
+
 
 for WORD in $@; do
   CMD="configure_${WORD}"
