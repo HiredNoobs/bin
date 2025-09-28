@@ -18,7 +18,7 @@ function configure_docker() {
 
   log_info "Installing Docker $docker_version."
   sh <(curl -fsSL https://get.docker.com)
-  log_info Installed Docker $docker_version
+  log_info "Installed Docker $docker_version"
 
   log_info "Installing Docker Compose $docker_compose_version"
   curl -fsSL "https://github.com/docker/compose/releases/download/${docker_compose_version}/docker-compose-$(uname -s)-$(uname -m)" \
