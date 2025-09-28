@@ -26,6 +26,11 @@ function configure_docker() {
   chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
   log_info "Installed Docker Compose $docker_compose_version"
 
+  log_info "Adding $USER to docker group"
+  sudo groupadd docker
+  sudo usermod -aG docker $USER
+
+  log_info "Starting and enabling docker"
   systemctl enable docker --now
 }
 
@@ -44,7 +49,7 @@ configure_help() {
   log_info "The following commands can be used to configure the system:"
   local fn
   for fn in $(compgen -A function configure_); do
-    echo "${fn#configure_}"
+    log_info "${fn#configure_}"
   done
 }
 
