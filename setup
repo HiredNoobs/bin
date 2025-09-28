@@ -17,13 +17,13 @@ function configure_docker() {
   docker_compose_version=$(get_latest_release "docker/compose")
 
   log_info "Installing Docker $docker_version."
-  sh <(curl -fsSL https://get.docker.com)
+  sudo sh <(curl -fsSL https://get.docker.com)
   log_info "Installed Docker $docker_version"
 
   log_info "Installing Docker Compose $docker_compose_version"
-  curl -fsSL "https://github.com/docker/compose/releases/download/${docker_compose_version}/docker-compose-$(uname -s)-$(uname -m)" \
+  sudo curl -fsSL "https://github.com/docker/compose/releases/download/${docker_compose_version}/docker-compose-$(uname -s)-$(uname -m)" \
     -o /usr/local/lib/docker/cli-plugins/docker-compose
-  chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+  sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
   log_info "Installed Docker Compose $docker_compose_version"
 
   log_info "Adding $USER to docker group"
@@ -31,7 +31,7 @@ function configure_docker() {
   sudo usermod -aG docker $USER
 
   log_info "Starting and enabling docker"
-  systemctl enable docker --now
+  sudo systemctl enable docker --now
 }
 
 function configure_vim() {
