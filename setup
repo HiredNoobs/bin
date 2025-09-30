@@ -17,7 +17,7 @@ function configure_docker() {
   docker_compose_version=$(get_latest_release "docker/compose")
 
   log_info "Installing Docker $docker_version."
-  sudo sh <(curl -fsSL https://get.docker.com)
+  curl -fsSL https://get.docker.com | sudo sh
   log_info "Installed Docker $docker_version"
 
   log_info "Installing Docker Compose $docker_compose_version"
