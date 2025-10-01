@@ -1,10 +1,10 @@
-parse_git_branch() {
+function parse_git_branch {
   local ref
   ref=$(git symbolic-ref --quiet HEAD 2>/dev/null) || return
   printf '(%s)' "${ref##refs/heads/}"
 }
 
-update_git_segment() {
+function update_git_segment {
   local b
   b=$(parse_git_branch)
   if [[ -n $b ]]; then
@@ -16,3 +16,6 @@ update_git_segment() {
 
 PROMPT_COMMAND=update_git_segment
 PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w${GIT_SEGMENT}\$ '
+
+alias tm="tmux new-session \; split-window -h -p 50 \; select-pane -L \; attach"                                                      │
+alias tm-end="tmux kill-session && clear"

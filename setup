@@ -29,6 +29,7 @@ function configure_docker() {
   log_info "Adding $USER to docker group"
   sudo groupadd docker
   sudo usermod -aG docker $USER
+  log_info "User added to docker group, relog or use 'exec sudo su -l \$USER' to access docker"
 
   log_info "Starting and enabling docker"
   sudo systemctl enable docker --now

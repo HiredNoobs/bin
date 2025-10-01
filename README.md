@@ -12,6 +12,8 @@
 curl -L https://bit.ly/HiredMove | bash -s [username]
 ```
 
+After running you should update the password for the new user with ``passwd [username]``.
+
 ## Setup
 
 ``setup`` is for installing optional extras and configuring them. ``setup`` may expect access to ``sudo`` for some options.
