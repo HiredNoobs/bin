@@ -13,6 +13,7 @@ function configure_docker {
   log_info "Installed Docker $docker_version"
 
   log_info "Installing Docker Compose $docker_compose_version"
+  mkdir -p /usr/local/lib/docker/cli-plugins
   sudo curl -fsSL "https://github.com/docker/compose/releases/download/${docker_compose_version}/docker-compose-$(uname -s)-$(uname -m)" \
     -o /usr/local/lib/docker/cli-plugins/docker-compose
   sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
