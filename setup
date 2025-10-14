@@ -26,7 +26,7 @@ function command_tmux {
   configure_tmux
 }
 
-function configure_help {
+function command_help {
   log_info "The following commands can be used to configure the system:"
   local fn
   for fn in $(compgen -A function command_); do
