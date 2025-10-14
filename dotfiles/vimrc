@@ -23,3 +23,7 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 set number
 set relativenumber
 set background=dark
+
+execute pathogen#infect()
+
+colorscheme gruvbox
