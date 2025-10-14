@@ -15,7 +15,7 @@ function update_git_segment {
 }
 
 PROMPT_COMMAND=update_git_segment
-PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w${GIT_SEGMENT}\$ '
+PS1='\u@\h:\w${GIT_SEGMENT}\$ '
 
 alias tm="tmux new-session \; split-window -h -p 50 \; select-pane -L \; attach"
 alias tm-end="tmux kill-session && clear"
