@@ -13,7 +13,6 @@ set wildignore+=**/*.pyc
 set hidden
 
 " have vim jump to the last position when reopening a file
-" if you have problems check the ownership/permissions of ~/.viminfo
 
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -22,4 +21,5 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 autocmd Filetype gitcommit setlocal spell textwidth=72
 
 set number
+set relativenumber
 set background=dark
