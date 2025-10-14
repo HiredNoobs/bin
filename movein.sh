@@ -26,7 +26,7 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 apt-get update -y
-apt-get install -y sudo tmux vim git bash-completion tree python3 python3-venv
+apt-get install -y sudo git bash-completion
 
 if id "$USERNAME" &>/dev/null; then
   log_info "User '$USERNAME' already exists; skipping creation."
