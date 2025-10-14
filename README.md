@@ -2,9 +2,11 @@
 
 ## Move in
 
-``movein.sh`` is for the initial setup - it clones this repo, sets up a new user with sudo access, and sets up symlinks for everything in ``dotfiles``.
+**This script only supports debian!** It's main use is setting up debian LXCs for other use cases just clone the repo.
 
-``movein.sh`` is intended to be run as root on the first login to a new host/vm/lxc. It is intended to be run as ``root``.
+``movein.sh`` is for the initial setup - it sets up a new user with sudo access and clones this repo to it's home directory.
+
+``movein.sh`` is intended to be run as root on the first login to a new host/VM/LXC. It is intended to be run as ``root``.
 
 ``movein.sh`` usage:
 
