@@ -47,5 +47,5 @@ for WORD in $@; do
   CMD="command_${WORD}"
   $CMD
 
-  log_info "Finished $WORD setup.)
+  log_info "Finished $WORD setup."
 done
