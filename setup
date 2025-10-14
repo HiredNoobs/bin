@@ -5,6 +5,8 @@
 # Usage:
 # setup COMMAND
 
+set -e
+
 THIS=$(realpath $0)
 HERE=$(dirname $THIS)
 
