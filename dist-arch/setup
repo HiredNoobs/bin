@@ -8,8 +8,8 @@ function configure_docker {
   sudo pacman -S docker docker-compose
 
   log_info "Adding $USER to docker group"
-  sudo groupadd docker
-  sudo usermod -aG docker $USER
+  create_group docker
+  add_user_to_group $USER docker
 
   log_info "Starting and enabling docker"
   sudo systemctl enable docker --now
