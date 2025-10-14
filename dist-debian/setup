@@ -32,11 +32,16 @@ function configure_docker {
 }
 
 function configure_vim {
+  log_info "Installing vim."
   sudo apt-get install vim
 
   mkdir -p ~/.vim/autoload ~/.vim/bundle
 
-  curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+  log_info "Setting up vim addon manager (pathogen)."
+
+  curl -LSso ~/.vim/autoload/pathogen.vim https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+
+  log_info "Cloning vim addons."
 
   git clone https://github.com/vim-airline/vim-airline.git ~/.vim/bundle/airline
   git clone https://github.com/tpope/vim-fugitive.git ~/.vim/bundle/fugitive

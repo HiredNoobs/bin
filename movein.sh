@@ -47,14 +47,3 @@ else
   log_info "Cloning $REPO_URL into $BIN_DIR"
   sudo -u "$USERNAME" git clone "$REPO_URL" "$BIN_DIR"
 fi
-
-if [[ -d "$BIN_DIR/dotfiles" ]]; then
-  for F in "$BIN_DIR"/dotfiles/*; do
-    log_info "Setting symlink for $F"
-    BASENAME="$(basename "$F")"
-    TARGET="$HOME_DIR/.$BASENAME"
-    rm -f "$TARGET"
-    ln -s "$F" "$TARGET"
-    chown -h "$USERNAME:$USERNAME" "$TARGET"
-  done
-fi
