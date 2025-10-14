@@ -42,6 +42,10 @@ DISTRO_ID=$(awk -F'=' '/^ID=/ {print tolower($2)}' /etc/*-release 2> /dev/null)
 source $HERE/dist-$DISTRO_ID/setup
 
 for WORD in $@; do
+  log_info "Starting $WORD setup."
+
   CMD="command_${WORD}"
-  $CMD 
+  $CMD
+
+  log_info "Finished $WORD setup.)
 done
