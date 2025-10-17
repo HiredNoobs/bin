@@ -14,6 +14,11 @@ HERE=$(dirname "$THIS")
 source $HERE/lib/logging.sh
 source $HERE/lib/utils.sh
 
+function command_bash {
+  rm -f "$HOME/.bashrc"
+  ln -s "$HERE/dotfiles/bashrc" "$HOME/.bashrc"
+}
+
 function command_docker {
   configure_docker
 }
@@ -42,10 +47,6 @@ DISTRO_ID=$(awk -F'=' '/^ID=/ {print tolower($2)}' /etc/*-release 2> /dev/null)
 source $HERE/dist-$DISTRO_ID/setup
 
 for WORD in $@; do
-  log_info "Starting $WORD setup."
-
   CMD="command_${WORD}"
   $CMD
-
-  log_info "Finished $WORD setup."
 done
