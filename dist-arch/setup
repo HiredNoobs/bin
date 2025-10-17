@@ -32,12 +32,10 @@ function configure_vim {
   get_latest_git https://github.com/mhinz/vim-signify.git ~/.vim/bundle/vim-signify
   get_latest_git https://github.com/morhetz/gruvbox.git ~/.vim/bundle/gruvbox
 
-  rm -f "$HOME/.vimrc"
-  ln -s "$HERE/dotfiles/vimrc" "$HOME/.vimrc"
+  rsync -av --delete "$HERE/dotfiles/.config/vim/" "$XDG_CONFIG_HOME/vim/"
 }
 
 function configure_tmux {
   sudo pacman -S tmux
-  rm -f "$HOME/.tmux.conf"
-  ln -s "$HERE/dotfiles/tmux.conf" "$HOME/.tmux.conf"
+  rsync -av --delete "$HERE/dotfiles/.config/tmux/" "$XDG_CONFIG_HOME/tmux/"
 }

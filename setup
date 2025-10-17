@@ -11,12 +11,14 @@ set -e
 THIS=$(realpath "$0")
 HERE=$(dirname "$THIS")
 
+XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+
 source $HERE/lib/logging.sh
 source $HERE/lib/utils.sh
 
 function command_bash {
-  rm -f "$HOME/.bashrc"
-  ln -s "$HERE/dotfiles/bashrc" "$HOME/.bashrc"
+  rsync -av "$HERE/dotfiles/.bashrc" "$XDG_CONFIG_HOME/.bashrc"
+  rsync -av --delete "$HERE/dotfiles/.config/bashrc/" "$XDG_CONFIG_HOME/bashrc/"
 }
 
 function command_docker {
