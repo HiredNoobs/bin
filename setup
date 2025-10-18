@@ -17,8 +17,7 @@ source $HERE/lib/logging.sh
 source $HERE/lib/utils.sh
 
 function command_bash {
-  rsync -av "$HERE/dotfiles/.bashrc" "$XDG_CONFIG_HOME/.bashrc"
-  rsync -av --delete "$HERE/dotfiles/.config/bashrc/" "$XDG_CONFIG_HOME/bashrc/"
+  configure_bash
 }
 
 function command_docker {
@@ -37,6 +36,7 @@ function command_help {
   log_info "The following commands can be used to configure the system:"
   local fn
   for fn in $(compgen -A function command_); do
+    [ "$fn" = "command_help" ] && continue
     log_info "${fn#command_}"
   done
 }

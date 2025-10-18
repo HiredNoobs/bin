@@ -3,6 +3,12 @@
 # The `setup` in the root directory will use these functions on arch.
 # It doesn't do anything when executed directly.
 
+function configure_bash {
+  sudo pacman -S bash-completion
+  rsync -av "$HERE/dotfiles/.bashrc" "$XDG_CONFIG_HOME/.bashrc"
+  rsync -av --delete "$HERE/dotfiles/.config/bashrc/" "$XDG_CONFIG_HOME/bashrc/"
+}
+
 function configure_docker {
   log_info "Installing docker and docker compose v2 latest."
   sudo pacman -S docker docker-compose
