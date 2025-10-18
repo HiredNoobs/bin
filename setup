@@ -45,8 +45,14 @@ function command_help {
 # http://stackoverflow.com/questions/29581754
 # https://github.com/which-distro/os-release
 DISTRO_ID=$(awk -F'=' '/^ID=/ {print tolower($2)}' /etc/*-release 2> /dev/null)
+SETUP_FILE="$HERE/dist-$DISTRO_ID/setup"
 
-source $HERE/dist-$DISTRO_ID/setup
+if [ -f "$SETUP_FILE" ]; then
+  source $SETUP_FILE
+else
+  log_error "Unsupported distro '$DISTRO_ID'. Exiting..."
+  exit 1
+fi
 
 for WORD in $@; do
   CMD="command_${WORD}"
