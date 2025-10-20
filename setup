@@ -20,6 +20,10 @@ function command_bash {
   configure_bash
 }
 
+function command_hypr {
+  configure_hyprland
+}
+
 function command_docker {
   configure_docker
 }

@@ -27,3 +27,20 @@ setup COMMAND
 ```
 
 ``setup help`` can be used to see all the available options.
+
+### Bash
+
+Configure bash with ``bashrc``. The bashrc is mostly a wrapper to load content from ``.config/bashrc``.
+
+This does add this repo to the ``$PATH``.
+
+### Hyprland (WIP)
+
+For Arch only.
+
+Included is a very basic Hyprland configuration.
+
+The initial confiuration is based on the following repos:
+
+[simple-hyprland](https://github.com/gaurav23b/simple-hyprland)
+[end-4's dotfiles](https://github.com/end-4/dots-hyprland)

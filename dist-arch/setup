@@ -9,6 +9,19 @@ function configure_bash {
   rsync -av --delete "$HERE/dotfiles/.config/bashrc/" "$XDG_CONFIG_HOME/bashrc/"
 }
 
+function configure_hyprland {
+  log_info "Configuring hyprland."
+  sudo pacman -S hyprland xdg-desktop-portal-hyprland polkit-kde-agent \
+    qt5-wayland qt6-wayland dunst brightnessctl pamixer waybar fuzzel \
+    nwg-look qt5ct qt6ct kvantum
+  
+  sudo yay -S swww hyprlock hypridle grimblast
+
+  rsync -av --delete "$HERE/dotfiles/.config/hypr/" "$XDG_CONFIG_HOME/hypr/"
+  rsync -av --delete "$HERE/dotfiles/.config/waybar/" "$XDG_CONFIG_HOME/waybar/"
+  rsync -av --delete "$HERE/dotfiles/.config/fuzzel/" "$XDG_CONFIG_HOME/fuzzel/"
+}
+
 function configure_docker {
   log_info "Installing docker and docker compose v2 latest."
   sudo pacman -S docker docker-compose
