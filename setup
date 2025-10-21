@@ -16,6 +16,10 @@ XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 source $HERE/lib/logging.sh
 source $HERE/lib/utils.sh
 
+# -----------------------------------------------------
+# Commands
+# -----------------------------------------------------
+
 function command_bash {
   configure_bash
 }
@@ -45,6 +49,10 @@ function command_help {
   done
 }
 
+# -----------------------------------------------------
+# Main
+# -----------------------------------------------------
+
 # Useful links:
 # http://stackoverflow.com/questions/29581754
 # https://github.com/which-distro/os-release
@@ -57,6 +65,9 @@ else
   log_error "Unsupported distro '$DISTRO_ID'. Exiting..."
   exit 1
 fi
+
+# Basically every command assumes that this directory exists.
+mkdir -p $XDG_CONFIG_HOME
 
 for WORD in $@; do
   CMD="command_${WORD}"
