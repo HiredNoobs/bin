@@ -5,7 +5,7 @@
 
 function configure_bash {
   sudo pacman -S bash-completion
-  rsync -av "$HERE/dotfiles/.bashrc" "$XDG_CONFIG_HOME/.bashrc"
+  rsync -av "$HERE/dotfiles/.bashrc" ~/.bashrc
   rsync -av --delete "$HERE/dotfiles/.config/bashrc/" "$XDG_CONFIG_HOME/bashrc/"
 }
 
@@ -15,7 +15,7 @@ function configure_hyprland {
     qt5-wayland qt6-wayland dunst brightnessctl pamixer waybar fuzzel \
     nwg-look qt5ct qt6ct kvantum
   
-  sudo yay -S swww hyprlock hypridle grimblast
+  yay -S swww hyprlock hypridle grimblast
 
   rsync -av --delete "$HERE/dotfiles/.config/hypr/" "$XDG_CONFIG_HOME/hypr/"
   rsync -av --delete "$HERE/dotfiles/.config/waybar/" "$XDG_CONFIG_HOME/waybar/"

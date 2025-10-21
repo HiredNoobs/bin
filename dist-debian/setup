@@ -5,7 +5,7 @@
 
 function configure_bash {
   sudo apt-get install bash-completion
-  rsync -av "$HERE/dotfiles/.bashrc" "$XDG_CONFIG_HOME/.bashrc"
+  rsync -av "$HERE/dotfiles/.bashrc" ~/.bashrc
   rsync -av --delete "$HERE/dotfiles/.config/bashrc/" "$XDG_CONFIG_HOME/bashrc/"
 }
 
