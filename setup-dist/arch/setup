@@ -13,11 +13,15 @@ function configure_hyprland {
   log_info "Configuring hyprland."
   sudo pacman -S hyprland xdg-desktop-portal-hyprland polkit-kde-agent \
     qt5-wayland qt6-wayland dunst brightnessctl pamixer waybar fuzzel \
-    nwg-look qt5ct qt6ct kvantum
+    nwg-look qt5ct qt6ct kvantum blueman bluez
   
   yay -S swww hyprlock hypridle grimblast otf-codenewroman-nerd pywal
 
   wal --theme base16-gruvbox-medium
+
+  # Bluetooth will start in non-discoverable mode
+  sudo sed -i -e 's/^\#AutoEnable=true/AutoEnable=false/'
+  sudo systemctl enable bluetooth --now
 
   rsync -av --delete "$HERE/dotfiles/.config/hypr/" "$XDG_CONFIG_HOME/hypr/"
   rsync -av --delete "$HERE/dotfiles/.config/waybar/" "$XDG_CONFIG_HOME/waybar/"

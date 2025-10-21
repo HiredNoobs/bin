@@ -9,7 +9,9 @@
     "modules-left": [
         "custom/notification",
         "clock",
-        "tray"
+        "cpu",
+        "memory",
+        "temperature"
     ],
     "modules-center": [
         "hyprland/workspaces"
@@ -76,6 +78,7 @@
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\n{device_address}",
         "tooltip-format-enumerate-connected-battery": "{device_alias}\n{device_address}\n{device_battery_percentage}%",
+        "on-click": "rfkill toggle bluetooth",
         "on-click-right": "blueman-manager"
     },
     "battery": {
@@ -115,9 +118,7 @@
         },
         "modules": [
             "custom/expand",
-            "cpu",
-            "memory",
-            "temperature",
+            "tray",
             "custom/endpoint"
         ]
     },
