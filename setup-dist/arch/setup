@@ -17,6 +17,8 @@ function configure_hyprland {
   
   yay -S swww hyprlock hypridle grimblast otf-codenewroman-nerd pywal
 
+  wal --theme base16-gruvbox-medium
+
   rsync -av --delete "$HERE/dotfiles/.config/hypr/" "$XDG_CONFIG_HOME/hypr/"
   rsync -av --delete "$HERE/dotfiles/.config/waybar/" "$XDG_CONFIG_HOME/waybar/"
   rsync -av --delete "$HERE/dotfiles/.config/fuzzel/" "$XDG_CONFIG_HOME/fuzzel/"
