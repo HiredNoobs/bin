@@ -42,5 +42,6 @@ Included is a very basic Hyprland configuration.
 
 The initial confiuration is based on the following repos:
 
-[simple-hyprland](https://github.com/gaurav23b/simple-hyprland)
-[end-4's dotfiles](https://github.com/end-4/dots-hyprland)
+Hyprland: [simple-hyprland](https://github.com/gaurav23b/simple-hyprland)
+Hyprland: [end-4's dotfiles](https://github.com/end-4/dots-hyprland)
+Waybar: [elifouts dotfiles](https://github.com/elifouts/Dotfiles)
