@@ -17,7 +17,6 @@ tooltip {
 }
 
 #clock:hover,
-#custom-pacman:hover,
 #custom-notification:hover,
 #bluetooth:hover,
 #network:hover,
@@ -39,12 +38,6 @@ tooltip {
     padding: 0px 5px;
     color: @color7;
     transition: all .3s ease;
-}
-
-#custom-pacman {
-    padding: 0px 5px;
-    transition: all .3s ease;
-    color: @color7;
 }
 
 #workspaces {

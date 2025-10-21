@@ -9,7 +9,6 @@
     "modules-left": [
         "custom/notification",
         "clock",
-        "custom/pacman",
         "tray"
     ],
     "modules-center": [
@@ -45,7 +44,7 @@
         "escape": true
     },
     "clock": {
-        "format": "{:%I:%M:%S %p} ",
+        "format": "{:%A    %B-%d-%Y    %I:%M:%S %p} ",
         "interval": 1,
         "tooltip-format": "<tt>{calendar}</tt>",
         "calendar": {
@@ -98,15 +97,6 @@
             "󰂂",
             "󰁹"
         ]
-    },
-    "custom/pacman": {
-        "format": "󰅢 {}",
-        "interval": 30,
-        "exec": "checkupdates | wc -l",
-        "exec-if": "exit 0",
-        "on-click": "kitty sh -c 'yay -Syu; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar",
-        "signal": 8,
-        "tooltip": false
     },
     "custom/expand": {
         "format": "",
