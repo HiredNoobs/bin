@@ -20,7 +20,7 @@ function configure_hyprland {
   wal --theme base16-gruvbox-medium
 
   # Bluetooth will start in non-discoverable mode
-  sudo sed -i -e 's/^\#AutoEnable=true/AutoEnable=false/'
+  sudo sed -i -e 's/^\#AutoEnable=true/AutoEnable=false/' /etc/bluetooth/main.conf
   sudo systemctl enable bluetooth --now
 
   rsync -av --delete "$HERE/dotfiles/.config/hypr/" "$XDG_CONFIG_HOME/hypr/"
