@@ -51,7 +51,7 @@ function configure_vim {
   get_latest_git https://github.com/mhinz/vim-signify.git ~/.vim/bundle/vim-signify
   get_latest_git https://github.com/morhetz/gruvbox.git ~/.vim/bundle/gruvbox
 
-  rsync -av --delete "$HERE/dotfiles/.config/vim/" "$XDG_CONFIG_HOME/vim/"
+  rsync -av --delete "$HERE/dotfiles/.vimrc" ~/.vimrc
 }
 
 function configure_tmux {

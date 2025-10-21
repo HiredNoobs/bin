@@ -15,7 +15,7 @@ function configure_hyprland {
     qt5-wayland qt6-wayland dunst brightnessctl pamixer waybar fuzzel \
     nwg-look qt5ct qt6ct kvantum
   
-  yay -S swww hyprlock hypridle grimblast
+  yay -S swww hyprlock hypridle grimblast otf-codenewroman-nerd pywal
 
   rsync -av --delete "$HERE/dotfiles/.config/hypr/" "$XDG_CONFIG_HOME/hypr/"
   rsync -av --delete "$HERE/dotfiles/.config/waybar/" "$XDG_CONFIG_HOME/waybar/"
@@ -51,7 +51,7 @@ function configure_vim {
   get_latest_git https://github.com/mhinz/vim-signify.git ~/.vim/bundle/vim-signify
   get_latest_git https://github.com/morhetz/gruvbox.git ~/.vim/bundle/gruvbox
 
-  rsync -av --delete "$HERE/dotfiles/.config/vim/" "$XDG_CONFIG_HOME/vim/"
+  "$HERE/dotfiles/.vimrc" ~/.vimrc
 }
 
 function configure_tmux {
