@@ -18,6 +18,7 @@ tooltip {
 
 #clock:hover,
 #custom-notification:hover,
+#pulseaudio:hover,
 #bluetooth:hover,
 #network:hover,
 #battery:hover,
@@ -84,6 +85,12 @@ tooltip {
 }
 
 #bluetooth {
+    padding: 0px 5px;
+    transition: all .3s ease;
+    color: @color7;
+}
+
+#pulseaudio {
     padding: 0px 5px;
     transition: all .3s ease;
     color: @color7;
