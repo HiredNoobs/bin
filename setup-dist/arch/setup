@@ -35,6 +35,7 @@ function configure_hyprland {
   rsync -av --delete "$HERE/dotfiles/.config/fuzzel/" "$XDG_CONFIG_HOME/fuzzel/"
   rsync -av --delete "$HERE/dotfiles/.config/swaync/" "$XDG_CONFIG_HOME/swaync/"
   rsync -av --delete "$HERE/dotfiles/.config/kitty/" "$XDG_CONFIG_HOME/kitty/"
+  rsync -av --delete "$HERE/dotfiles/.config/walker/" "$XDG_CONFIG_HOME/walker/"
 }
 
 function configure_docker {
