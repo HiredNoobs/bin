@@ -11,13 +11,20 @@ function configure_bash {
 
 function configure_hyprland {
   log_info "Configuring hyprland."
+  log_info "Installing dependencies."
   sudo pacman -S hyprland xdg-desktop-portal-hyprland polkit-kde-agent \
-    qt5-wayland qt6-wayland dunst brightnessctl pamixer waybar fuzzel \
+    qt5-wayland qt6-wayland brightnessctl pamixer waybar fuzzel \
     nwg-look qt5ct qt6ct kvantum blueman bluez swaync swaybg
   
   yay -S hyprlock hypridle grimblast otf-codenewroman-nerd pywal
 
-  wal -i ~/bin/images/wallpapers/nord_scenary.png
+  log_info "Dependencies installed. Starting configuration."
+
+  # Using the wallpaper is nice is theory but it basically
+  # just generates shades of blue with very little contrast...
+  # Maybe there's some settings for wal that would help?
+  # wal -i ~/bin/images/wallpapers/nord_scenary.png
+  wal --theme base16-gruvbox-medium
 
   # Bluetooth will start in non-discoverable mode
   sudo sed -i -e 's/^\#AutoEnable=true/AutoEnable=false/' /etc/bluetooth/main.conf
