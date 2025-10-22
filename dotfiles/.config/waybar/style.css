@@ -29,13 +29,13 @@ tooltip {
 }
 
 #custom-notification {
-    padding: 0px 5px 0 10;
+    padding: 0px 10px 0px 5px;
     transition: all .3s ease;
     color: @color7;
 }
 
 #clock {
-    padding: 0px 5px;
+    padding: 0px 5px 0px 10px;
     color: @color7;
     transition: all .3s ease;
 }
