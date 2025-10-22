@@ -64,7 +64,7 @@ function configure_vim {
   get_latest_git https://github.com/mhinz/vim-signify.git ~/.vim/bundle/vim-signify
   get_latest_git https://github.com/morhetz/gruvbox.git ~/.vim/bundle/gruvbox
 
-  "$HERE/dotfiles/.vimrc" ~/.vimrc
+  rsync -av "$HERE/dotfiles/.vimrc" ~/.vimrc
 }
 
 function configure_tmux {
