@@ -14,7 +14,7 @@ function configure_hyprland {
   log_info "Installing dependencies."
   sudo pacman -S hyprland xdg-desktop-portal-hyprland polkit-kde-agent \
     qt5-wayland qt6-wayland brightnessctl pamixer waybar fuzzel \
-    nwg-look qt5ct qt6ct kvantum blueman bluez swaync swaybg swayosd
+    nwg-look qt5ct qt6ct kvantum blueman bluez swaync swaybg
   
   yay -S hyprlock hypridle grimblast otf-codenewroman-nerd pywal walker
 
@@ -23,6 +23,7 @@ function configure_hyprland {
   # Using the wallpaper is nice is theory but it basically
   # just generates shades of blue with very little contrast...
   # Maybe there's some settings for wal that would help?
+  # Or maybe I just need a wallpaper with more colors...
   # wal -i ~/bin/images/wallpapers/nord_scenary.png
   wal --theme base16-gruvbox-medium
 
