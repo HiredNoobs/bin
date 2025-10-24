@@ -13,10 +13,16 @@ function configure_hyprland {
   log_info "Configuring hyprland."
   log_info "Installing dependencies."
   sudo pacman -S hyprland xdg-desktop-portal-hyprland polkit-kde-agent \
-    qt5-wayland qt6-wayland brightnessctl pamixer waybar fuzzel \
-    nwg-look qt5ct qt6ct kvantum blueman bluez swaync swaybg
+    brightnessctl pamixer waybar blueman bluez swaync swaybg
   
-  yay -S hyprlock hypridle grimblast otf-codenewroman-nerd pywal walker
+  # Are qt6ct & kvantum the only ones actually in use?
+  sudo pacman -S qt5-wayland qt6-wayland qt5ct qt6ct kvantum
+  
+  # Should we just remove pywal from the deps and copy the theme into the repo?
+  yay -S hyprlock hypridle grimblast otf-codenewroman-nerd pywal
+
+  # Application launcher
+  yay -S walker elephant-websearch elephant-calc elephant-files elephant-files
 
   log_info "Dependencies installed. Starting configuration."
 
