@@ -59,51 +59,12 @@
         "buttons-grid": {
             "actions": [
                 {
-                    "label": "󰝟",
-                    "command": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-                    "type": "toggle"
-                },
-                {
-                    "label": "󰍭",
-                    "command": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
-                    "type": "toggle"
-                },
-
-                {
-                    "label": "",
-                    "command": "kitty nmtui"
-                },
-                {
-                    "label": "",
-                    "command": "blueman-manager"
+                    "label": "",
+                    "command": "hyprlock"
                 },
                 {
                     "label":"󰤄",
-                    "command": "swaync-client -d",
-                    "type":"toggle"
-                },
-
-                {
-                    "label": "󰀟",
-                    "command": "gnome-network-displays"
-                },
-
-                {
-                    "label": "󰈙",
-                    "command": "kitty bash -i -c 'Docs'"
-                },
-                {
-                    "label": "",
-                    "command": "kitty bash -i -c 'Settings'"
-                },
-                {
-                    "label": "",
-                    "command": "kitty bash -i -c 'tasks'"
-
-                },
-                {
-                    "label": "",
-                    "command": "hyprlock"
+                    "command": "systemctl suspend"
                 },
                 {
                     "label":"",
