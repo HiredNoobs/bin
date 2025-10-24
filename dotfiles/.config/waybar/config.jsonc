@@ -48,7 +48,7 @@
         "escape": true
     },
     "clock": {
-        "format": "{:%A    %B-%d-%Y    %I:%M:%S %p} ",
+        "format": "{:%A    %B-%d-%Y    %H:%M:%S %p} ",
         "interval": 1,
         "tooltip-format": "<tt>{calendar}</tt>",
         "calendar": {
@@ -160,7 +160,8 @@
     },
     "temperature": {
         "critical-threshold": 80,
-        "format": ""
+        "format": " {temperatureC}°C",
+        "tooltip": false
     },
     "tray": {
         "icon-size": 14,
