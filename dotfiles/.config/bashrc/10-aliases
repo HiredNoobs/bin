@@ -11,4 +11,3 @@ alias ls="ls --color=auto"
 # tmux
 # -----------------------------------------------------
 alias tm="tmux new-session \; split-window -h -p 50 \; select-pane -L \; attach"
-alias tm-end="tmux kill-session && clear"
