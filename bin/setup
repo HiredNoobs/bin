@@ -10,6 +10,7 @@ set -e
 
 THIS=$(realpath "$0")
 HERE=$(dirname "$THIS")
+ROOT=$(realpath "$HERE/..")
 
 XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 

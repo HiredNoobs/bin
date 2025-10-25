@@ -5,8 +5,8 @@
 
 function configure_bash {
   sudo pacman -S bash-completion
-  rsync -av "$HERE/dotfiles/.bashrc" ~/.bashrc
-  rsync -av --delete "$HERE/dotfiles/.config/bashrc/" "$XDG_CONFIG_HOME/bashrc/"
+  rsync -av "$ROOT/dotfiles/.bashrc" ~/.bashrc
+  rsync -av --delete "$ROOT/dotfiles/.config/bashrc/" "$XDG_CONFIG_HOME/bashrc/"
 }
 
 function configure_hyprland {
@@ -37,11 +37,11 @@ function configure_hyprland {
   sudo sed -i -e 's/^\#AutoEnable=true/AutoEnable=false/' /etc/bluetooth/main.conf
   sudo systemctl enable bluetooth --now
 
-  rsync -av --delete "$HERE/dotfiles/.config/hypr/" "$XDG_CONFIG_HOME/hypr/"
-  rsync -av --delete "$HERE/dotfiles/.config/waybar/" "$XDG_CONFIG_HOME/waybar/"
-  rsync -av --delete "$HERE/dotfiles/.config/swaync/" "$XDG_CONFIG_HOME/swaync/"
-  rsync -av --delete "$HERE/dotfiles/.config/kitty/" "$XDG_CONFIG_HOME/kitty/"
-  rsync -av --delete "$HERE/dotfiles/.config/walker/" "$XDG_CONFIG_HOME/walker/"
+  rsync -av --delete "$ROOT/dotfiles/.config/hypr/" "$XDG_CONFIG_HOME/hypr/"
+  rsync -av --delete "$ROOT/dotfiles/.config/waybar/" "$XDG_CONFIG_HOME/waybar/"
+  rsync -av --delete "$ROOT/dotfiles/.config/swaync/" "$XDG_CONFIG_HOME/swaync/"
+  rsync -av --delete "$ROOT/dotfiles/.config/kitty/" "$XDG_CONFIG_HOME/kitty/"
+  rsync -av --delete "$ROOT/dotfiles/.config/walker/" "$XDG_CONFIG_HOME/walker/"
 }
 
 function configure_docker {
@@ -73,10 +73,10 @@ function configure_vim {
   get_latest_git https://github.com/mhinz/vim-signify.git ~/.vim/bundle/vim-signify
   get_latest_git https://github.com/morhetz/gruvbox.git ~/.vim/bundle/gruvbox
 
-  rsync -av "$HERE/dotfiles/.vimrc" ~/.vimrc
+  rsync -av "$ROOT/dotfiles/.vimrc" ~/.vimrc
 }
 
 function configure_tmux {
   sudo pacman -S tmux
-  rsync -av --delete "$HERE/dotfiles/.config/tmux/" "$XDG_CONFIG_HOME/tmux/"
+  rsync -av --delete "$ROOT/dotfiles/.config/tmux/" "$XDG_CONFIG_HOME/tmux/"
 }

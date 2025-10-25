@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+#
+# Uses yt-dlp to download audio or video from a given url.
+# Everything is written to ~/Downloads.
+# Videos will be output as mp4s.
+#
+# Usage:
+# content-dl [--audio] [--browser BROWSER] URL [URL...]
+
+THIS=$(realpath "$0")
+HERE=$(dirname "$THIS")
+
+source "$HERE/lib/logging.sh"
+
+# -----------------------------------------------------
+# Parsing args
+# -----------------------------------------------------
+
+# Defaults
+AUDIO_ONLY=false
+BROWSER="firefox"
+POSITIONAL_ARGS=()
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --audio) AUDIO_ONLY=true; shift;;
+    --browser)
+      if [[ -z "$2" || "$2" == -* ]]; then
+        log_error "Missing argument for --browser"
+        exit 1
+      fi
+      BROWSER="$2"; shift 2;;
+    --browser=*)
+      BROWSER="${1#--browser=}"; shift;;
+    --) shift
+        while [[ $# -gt 0 ]]; do POSITIONAL_ARGS+=("$1"); shift; done
+        ;;
+    -*) log_error "Unknown option: $1"; exit 1;;
+    *) POSITIONAL_ARGS+=("$1"); shift;;
+  esac
+done
+
+set -- "${POSITIONAL_ARGS[@]}"
+
+# -----------------------------------------------------
+# Checks
+# -----------------------------------------------------
+
+if [[ $# -lt 1 ]]; then
+  log_error "No URL(s) given.\nUsage: content-dl [--audio] [--browser BROWSER] URL"
+  exit 1
+fi
+
+if ! command -v yt-dlp >/dev/null 2>&1; then
+  log_error "Error: yt-dlp not found in PATH"
+  exit 1
+fi
+
+# -----------------------------------------------------
+# Main
+# -----------------------------------------------------
+
+if [[ "$AUDIO_ONLY" == true ]]; then
+  for URL in "$@"; do
+    yt-dlp --extract-audio --audio-format m4a --embed-metadata --embed-thumbnail \
+      --sponsorblock-remove all --sponsorblock-mark all --cookies-from-browser "$BROWSER" -P "~/Downloads" "$URL"
+  done
+else
+  for URL in "$@"; do
+    yt-dlp -f "bv*[vcodec^=avc]+ba[ext=m4a]/b[ext=mp4]/b" --sponsorblock-remove all \
+      --sponsorblock-mark all --cookies-from-browser "$BROWSER" -P "~/Downloads" "$URL"
+  done
+fi

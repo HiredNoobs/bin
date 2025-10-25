@@ -11,7 +11,7 @@
 ``movein.sh`` usage:
 
 ```bash
-curl -L https://bit.ly/HiredMove | bash -s [username]
+curl -L https://raw.githubusercontent.com/HiredNoobs/bin/refs/heads/master/bin/movein.sh | bash -s [username]
 ```
 
 After running you should update the password for the new user with ``passwd [username]``.
@@ -26,15 +26,17 @@ After running you should update the password for the new user with ``passwd [use
 setup COMMAND
 ```
 
-``setup help`` can be used to see all the available options.
+``setup help`` can be used to see all the available options. Some of them can be seen below.
 
-### Bash
+<details><summary>Bash</summary>
 
 Configure bash with ``bashrc``. The bashrc is mostly a wrapper to load content from ``.config/bashrc``.
 
 This does add this repo to the ``$PATH``.
 
-### Hyprland (WIP)
+</details>
+
+<details><summary>Hyprland</summary>
 
 For Arch only.
 
@@ -47,3 +49,24 @@ Hyprland: [end-4's dotfiles](https://github.com/end-4/dots-hyprland)
 Waybar: [elifouts' dotfiles](https://github.com/elifouts/Dotfiles)
 Wallpapers: [nordic-wallpapers](https://github.com/linuxdotexe/nordic-wallpapers)
 Notification center: [ML4W dotfiles](https://github.com/mylinuxforwork/dotfiles)
+
+### Keybinds
+
+Window control:
+
+- `Super` + `Q` = Kill window
+- `Super` + `1` = Move to workspace 1, replace 1 with any other number 0-9.
+- `Super` + `Alt` + `1` = Move current window to workspace 1, replace 1 with any other number 0-9.
+- `Super` + `Shift` + `←` = Move current window left
+- `Super` + `Shift` + `↓` = Move current window down
+- `Super` + `Shift` + `↑` = Move current window up
+- `Super` + `Shift` + `→` = Move current window right
+
+Application shortcuts:
+
+- `Super` = Application launcher
+- `Super` + `W` = Web browser
+- `Super` + `E` = File explorer
+- `Super` + `T` = Terminal
+
+</details>

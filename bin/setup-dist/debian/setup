@@ -5,8 +5,8 @@
 
 function configure_bash {
   sudo apt-get install bash-completion
-  rsync -av "$HERE/dotfiles/.bashrc" ~/.bashrc
-  rsync -av --delete "$HERE/dotfiles/.config/bashrc/" "$XDG_CONFIG_HOME/bashrc/"
+  rsync -av "$ROOT/dotfiles/.bashrc" ~/.bashrc
+  rsync -av --delete "$ROOT/dotfiles/.config/bashrc/" "$XDG_CONFIG_HOME/bashrc/"
 }
 
 function configure_docker {
@@ -51,10 +51,10 @@ function configure_vim {
   get_latest_git https://github.com/mhinz/vim-signify.git ~/.vim/bundle/vim-signify
   get_latest_git https://github.com/morhetz/gruvbox.git ~/.vim/bundle/gruvbox
 
-  rsync -av "$HERE/dotfiles/.vimrc" ~/.vimrc
+  rsync -av "$ROOT/dotfiles/.vimrc" ~/.vimrc
 }
 
 function configure_tmux {
   sudo apt-get install tmux
-  rsync -av --delete "$HERE/dotfiles/.config/tmux/" "$XDG_CONFIG_HOME/tmux/"
+  rsync -av --delete "$ROOT/dotfiles/.config/tmux/" "$XDG_CONFIG_HOME/tmux/"
 }
