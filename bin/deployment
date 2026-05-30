@@ -3,9 +3,9 @@
 THIS=$(realpath "$0")
 HERE=$(dirname "$THIS")
 
-source $HERE/lib/logging.sh
-source $HERE/lib/utils.sh
-source $HERE/lib/confirmation.sh
+source "$HERE/lib/logging.sh"
+source "$HERE/lib/utils.sh"
+source "$HERE/lib/confirmation.sh"
 
 # -----------------------------------------------------
 # Helper functions
@@ -106,7 +106,7 @@ function run_help {
   done
 }
 
-function run_pull_secrets {
+function run_secret_pull {
   local vault_env="$1"
   local vault_secret="$2"
   mkdir -p "$SECRETS"
@@ -122,7 +122,7 @@ function run_pull_secrets {
   fi
 }
 
-function run_push_secrets {
+function run_secret_push {
   local vault_env="$1"
   local vault_secret="$2"
 
@@ -150,19 +150,25 @@ function run_push_secrets {
   fi
 }
 
-function run_diff_secrets {
+function run_secret_status {
   local vault_env="$1"
   local vault_secret="$2"
+  local diff=""
+
+  if [[ "${3:-}" == "--diff" ]]; then
+    diff="--diff"
+  fi
+
   if [ "${VAULT_KV_VERSION:-}" = "2" ]; then
     if out=$(vault kv get -format=json -mount labv2 "$vault_env/$vault_secret"); then
-      echo "$out" | jq '.data.data' | secret-diff "$SECRETS"
+      echo "$out" | jq '.data.data' | secret-status "$SECRETS" $diff
       return $?
     else
       return 1
     fi
   else
     if out=$(vault read "lab/${vault_env}/${vault_secret}" -format=json); then
-      echo "$out" | jq '.data' | secret-diff "${SECRETS}"
+      echo "$out" | jq '.data' | secret-status "${SECRETS}" $diff
       return $?
     else
       return 1
@@ -230,7 +236,7 @@ function command_help {
 
 function command_tools {
   if [ ! -d "$STACK_PATH/tools" ]; then
-    log_error "No tools for current deployment."
+    log_error "No tools for current stack."
     exit 1
   fi
 
@@ -238,30 +244,37 @@ function command_tools {
   run_tools $@
 }
 
-function command_pull_secrets {
+function command_secret_pull {
   local env="${1:-$ENVIRONMENT}"
   local secret="${2:-$STACK}"
 
-  run_pull_secrets "$env" "$secret"
+  run_secret_pull "$env" "$secret"
 }
 
-function command_push_secrets {
+function command_secret_push {
   local env="${1:-$ENVIRONMENT}"
   local secret="${2:-$STACK}"
 
-  if run_diff_secrets "$env" "$secret" >/dev/null 2>&1; then
+  if run_secret_status "$env" "$secret" >/dev/null 2>&1; then
     echo "Local secrets are identical to upstream. Skipping push."
     return 0
   fi
 
-  run_push_secrets "$env" "$secret"
+  run_secret_push "$env" "$secret"
 }
 
-function command_diff_secrets {
+function command_secret_status {
   local env="${1:-$ENVIRONMENT}"
   local secret="${2:-$STACK}"
 
-  run_diff_secrets "$env" "$secret"
+  run_secret_status "$env" "$secret"
+}
+
+function command_secret_diff {
+  local env="${1:-$ENVIRONMENT}"
+  local secret="${2:-$STACK}"
+
+  run_secret_status "$env" "$secret" --diff
 }
 
 function command_env {
