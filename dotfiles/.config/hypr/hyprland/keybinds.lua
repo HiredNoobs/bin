@@ -9,40 +9,40 @@ local mainMod = "SUPER"
 -------------------------------------------------------
 
 -- Change focus, arrow keys and vim binds
-hl.bind(mainMod .. " + LEFT", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + RIGHT", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + UP", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + DOWN", hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + LEFT", hl.dsp.focus({ direction = "left" }), { description = "Move focus to left" })
+hl.bind(mainMod .. " + RIGHT", hl.dsp.focus({ direction = "right" }), { description = "Move focus to right" })
+hl.bind(mainMod .. " + UP", hl.dsp.focus({ direction = "up" }), { description = "Move focus up" })
+hl.bind(mainMod .. " + DOWN", hl.dsp.focus({ direction = "down" }), { description = "Move focus down" })
 
-hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }), { description = "Move focus to left" })
+hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }), { description = "Move focus to right" })
+hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }), { description = "Move focus up" })
+hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }), { description = "Move focus down" })
 
 -- Move window (within workspace), arrow keys and vim binds
-hl.bind(mainMod .. " + SHIFT + LEFT", hl.dsp.window.move({ direction = "left" }))
-hl.bind(mainMod .. " + SHIFT + RIGHT", hl.dsp.window.move({ direction = "right" }))
-hl.bind(mainMod .. " + SHIFT + UP", hl.dsp.window.move({ direction = "up" }))
-hl.bind(mainMod .. " + SHIFT + DOWN", hl.dsp.window.move({ direction = "down" }))
+hl.bind(mainMod .. " + SHIFT + LEFT", hl.dsp.window.move({ direction = "left" }), { description = "Move window left" })
+hl.bind(mainMod .. " + SHIFT + RIGHT", hl.dsp.window.move({ direction = "right" }), { description = "Move window right" })
+hl.bind(mainMod .. " + SHIFT + UP", hl.dsp.window.move({ direction = "up" }), { description = "Move window up" })
+hl.bind(mainMod .. " + SHIFT + DOWN", hl.dsp.window.move({ direction = "down" }), { description = "Move window down" })
 
-hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left" }))
-hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }))
-hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }))
-hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }))
+hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left" }), { description = "Move window left" })
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }), { description = "Move window right" })
+hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }), { description = "Move window up" })
+hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }), { description = "Move window down" })
 
 -- Fullscreen
-hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen_state({ internal = 1, client = 0, action = "toggle" })) -- Maximise but don't inform app
-hl.bind(mainMod .. " + RETURN", hl.dsp.window.fullscreen_state({ internal = 2, client = 2, action = "toggle" })) -- Fullscreen, inform app
+hl.bind(mainMod .. " + F11", hl.dsp.window.fullscreen_state({ internal = 1, client = 0, action = "toggle" }), { description = "Toggle maximise window" })
+hl.bind(mainMod .. " + RETURN", hl.dsp.window.fullscreen_state({ internal = 2, client = 2, action = "toggle" }), { description = "Toggle fullscreen window" })
 
 -- Toggle floating
-hl.bind(mainMod .. " + D", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }), { description = "Toggle window floating" })
 
 -- Closing windows
-hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.kill())
+hl.bind(mainMod .. " + Q", hl.dsp.window.close(), { description = "Quit window" })
+hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.kill(), { description = "Kill window" })
 
 -- Dragging windows
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag())
+hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { description = "Drag window" })
 
 -------------------------------------------------------
 -- Workspace control
@@ -52,11 +52,11 @@ for i = 1, 10 do
 	local key = i % 10
     local kp = "KP_" .. key -- Keypad keys
 
-	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-	hl.bind(mainMod .. " + ALT + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
+	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }), { description = "Move focus to workspace N" })
+	hl.bind(mainMod .. " + ALT + " .. key, hl.dsp.window.move({ workspace = i, follow = false }), { description = "Send window to workspace N" })
 
-    hl.bind(mainMod .. " + " .. kp, hl.dsp.focus({ workspace = i }))
-    hl.bind(mainMod .. " + ALT + " .. kp, hl.dsp.window.move({ workspace = i, follow = false }))
+    hl.bind(mainMod .. " + " .. kp, hl.dsp.focus({ workspace = i }), { description = "Move focus to workspace N" })
+    hl.bind(mainMod .. " + ALT + " .. kp, hl.dsp.window.move({ workspace = i, follow = false }), { description = "Send window to workspace N" })
 end
 
 hl.bind(mainMod .. " + G", hl.dsp.workspace.toggle_special("games"))
@@ -65,31 +65,33 @@ hl.bind(mainMod .. " + G", hl.dsp.workspace.toggle_special("games"))
 -- Session control
 -------------------------------------------------------
 
-hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("pkill rofi || ~/.config/rofi/scripts/system-menu.sh"))
-hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("loginctl lock-session"))
+hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("pkill rofi || ~/.config/rofi/scripts/system-menu.sh"), { description = "Toggle system control menu" })
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("loginctl lock-session"), { description = "Lock session" })
 
 -------------------------------------------------------
 -- Application shortcuts
 -------------------------------------------------------
 
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("pkill rofi || rofi -show drun -theme ~/.config/rofi/launcher.rasi"))
-hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("kitty -1"))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("kitty bash -c yazi", { float = true, center = true, size = { "monitor_w*0.5", "monitor_h*0.5" } }))
-hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("librewolf || firefox"))
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("code"))
-hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("steam"))
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("pkill rofi || rofi -show drun -theme ~/.config/rofi/launcher.rasi"), { description = "Toggle application launcher" })
 
-hl.bind("CONTROL + SHIFT + ESCAPE", hl.dsp.exec_cmd("kitty bash -c btop", { float = true, center = true, size = { "monitor_w*0.5", "monitor_h*0.5" } }))
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("kitty -1"), { description = "Open Terminal" })
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("kitty bash -c yazi", { float = true, center = true, size = { "monitor_w*0.5", "monitor_h*0.5" } }), { description = "Open File Explorer" })
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("librewolf || firefox"), { description = "Open web browser (LibreWolf or Firefox)" })
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("code"), { description = "Open Code Editor" })
+hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("steam"), { description = "Open Steam" })
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("discord"), { description = "Open Discord" })
+
+hl.bind("CONTROL + SHIFT + ESCAPE", hl.dsp.exec_cmd("kitty bash -c btop", { float = true, center = true, size = { "monitor_w*0.5", "monitor_h*0.5" } }), { description = "Open btop" })
 
 -- Waybar toggle
-hl.bind("CONTROL + ESCAPE", hl.dsp.exec_cmd("pkill waybar || waybar"))
+hl.bind("CONTROL + ESCAPE", hl.dsp.exec_cmd("pkill waybar || waybar"), { description = "Toggle waybar" })
 
 -------------------------------------------------------
 -- Screenshot shortcuts
 -------------------------------------------------------
 
 -- Screenshot rofi menu
-hl.bind("PRINT", hl.dsp.exec_cmd("pkill rofi || ~/.config/rofi/scripts/screenshot-menu.sh"))
+hl.bind("PRINT", hl.dsp.exec_cmd("pkill rofi || ~/.config/rofi/scripts/screenshot-menu.sh"), { description = "Toggle screenshot menu" })
 
 -- Select area, saves unedited file, copies to clipboard, then opens file in swappy
 hl.bind(mainMod .. " + PRINT", function()
@@ -100,7 +102,7 @@ hl.bind(mainMod .. " + PRINT", function()
     local swappy = " && swappy -f \"" .. file .. "\""
 
     hl.dispatch(hl.dsp.exec_cmd(grim .. message .. copy .. swappy))
-end)
+end, { description = "Screenshot - Select area" })
 
 -- Full screen saves file, copies to clipboard
 hl.bind("ALT + PRINT", function()
@@ -110,7 +112,7 @@ hl.bind("ALT + PRINT", function()
     local copy = " && wl-copy < \"" .. file .. "\""
 
     hl.dispatch(hl.dsp.exec_cmd(grim .. message .. copy))
-end)
+end, { description = "Screenshot - fullscreen" })
 
 -------------------------------------------------------
 -- Media control
