@@ -29,7 +29,7 @@ local modal_titles = {
 for _, modal_title in ipairs(modal_titles) do
     local match = {
         class = "xdg-desktop-portal-gtk",
-        title = modal_title
+        title = ".*" .. modal_title .. ".*"
     }
 
     hl.window_rule({
@@ -58,7 +58,7 @@ hl.window_rule({
 
 -- Steam games
 hl.window_rule({
-    match = { initial_class = "^(steam_app_.*)" }, -- This one needs the ^() for some reason...?
+    match = { initial_class = "^(steam_app_.*)" },
     workspace = "special:games silent",
     float = false,
     no_initial_focus = true,
