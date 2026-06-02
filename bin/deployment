@@ -62,6 +62,7 @@ function env_matches_file {
 
 function discover_stack_context {
   export DOCKER_CONTEXT="$CONTEXT"
+
   if [ -f "${SECRETS}/secrets.env" ]; then
     source "${SECRETS}/secrets.env"
   fi
@@ -109,15 +110,17 @@ function run_help {
 function run_secret_pull {
   local vault_env="$1"
   local vault_secret="$2"
-  mkdir -p "$SECRETS"
+  local local_secrets_dir="$3"
+
+  mkdir -p "$local_secrets_dir"
   if [ "${VAULT_KV_VERSION:-}" = "2" ]; then
     if out=$(vault kv get -format=json -mount labv2 "$vault_env/$vault_secret"); then
-      echo "$out" | jq '.data.data' | secret-unpack "$SECRETS"
-      echo "$out" | jq '.data.metadata' > "$SECRETS/.metadata.json"
+      echo "$out" | jq '.data.data' | secret-unpack "$local_secrets_dir"
+      echo "$out" | jq '.data.metadata' > "$local_secrets_dir/.metadata.json"
     fi
   else
     if out=$(vault read "lab/$vault_env/$vault_secret" -format=json); then
-      echo "$out" | jq '.data' | secret-unpack "$SECRETS"
+      echo "$out" | jq '.data' | secret-unpack "$local_secrets_dir"
     fi
   fi
 }
@@ -125,24 +128,25 @@ function run_secret_pull {
 function run_secret_push {
   local vault_env="$1"
   local vault_secret="$2"
+  local local_secrets_dir="$3"
 
   # Check for at least one non-hidden file
-  if compgen -G "$SECRETS"/* > /dev/null; then
+  if compgen -G "$local_secrets_dir"/* > /dev/null; then
     if [ "${VAULT_KV_VERSION:-}" = "2" ]; then
       local cas
-      if [ -f "$SECRETS/.metadata.json" ]; then
-        cas=$(jq -r '.version' "$SECRETS/.metadata.json")
+      if [ -f "$local_secrets_dir/.metadata.json" ]; then
+        cas=$(jq -r '.version' "$local_secrets_dir/.metadata.json")
       else
         cas="0"
       fi
 
-      if secret-pack "$SECRETS"/* | vault kv put -cas="$cas" -mount labv2 "$vault_env/$vault_secret" -; then
+      if secret-pack "$local_secrets_dir"/* | vault kv put -cas="$cas" -mount labv2 "$vault_env/$vault_secret" -; then
         # Refresh metadata after a successful write
         vault kv get -format=json -mount labv2 "$vault_env/$vault_secret" \
-          | jq '.data.metadata' > "$SECRETS/.metadata.json"
+          | jq '.data.metadata' > "$local_secrets_dir/.metadata.json"
       fi
     else
-      secret-pack "$SECRETS"/* | vault write "lab/$vault_env/$vault_secret" -
+      secret-pack "$local_secrets_dir"/* | vault write "lab/$vault_env/$vault_secret" -
     fi
   else
     echo "There are no local secrets to push."
@@ -153,22 +157,23 @@ function run_secret_push {
 function run_secret_status {
   local vault_env="$1"
   local vault_secret="$2"
+  local local_secrets_dir="$3"
   local diff=""
 
-  if [[ "${3:-}" == "--diff" ]]; then
+  if [[ "${4:-}" == "--diff" ]]; then
     diff="--diff"
   fi
 
   if [ "${VAULT_KV_VERSION:-}" = "2" ]; then
     if out=$(vault kv get -format=json -mount labv2 "$vault_env/$vault_secret"); then
-      echo "$out" | jq '.data.data' | secret-status "$SECRETS" $diff
+      echo "$out" | jq '.data.data' | secret-status "$local_secrets_dir" $diff
       return $?
     else
       return 1
     fi
   else
     if out=$(vault read "lab/${vault_env}/${vault_secret}" -format=json); then
-      echo "$out" | jq '.data' | secret-status "${SECRETS}" $diff
+      echo "$out" | jq '.data' | secret-status "$local_secrets_dir" $diff
       return $?
     else
       return 1
@@ -191,6 +196,26 @@ function run_env {
 }
 
 function run_deploy {
+  if [[ -f "$SECRETS/external.yml" ]]; then
+    local external_secret_env external_secret external_key
+
+    for external_secret_env in $(yq '.external | keys | .[]' "$SECRETS/external.yml"); do
+      for external_secret in $(yq ".external.$external_secret_env | keys | .[]" "$SECRETS/external.yml"); do
+        mkdir -p "$SECRETS/$external_secret"
+        run_secret_pull "$external_secret_env" "$external_secret" "$SECRETS/$external_secret"
+
+        for external_key in $(yq ".external.$external_secret_env.${external_secret}[]" "$SECRETS/external.yml"); do
+          if [[ -f "$SECRETS/$external_secret/$external_key" ]]; then
+            docker secret create "external_${STACK}.${external_secret}_${external_key}" "$SECRETS/$external_secret/$external_key"
+          fi
+        done
+
+        # $SECRETS is almostly certainly set but let's not accidentally run "rm -rf /"
+        rm -rf "${SECRETS:?}/$external_secret"
+      done
+    done
+  fi
+
   stack_deploy
 }
 
@@ -199,8 +224,16 @@ function run_status {
 }
 
 function run_clean {
-  log_info "Removing $STACK..."
+  local swarm_secrets swarm_secret
+
+  log_info "Removing $STACK."
   docker stack rm "$STACK" --detach=false
+
+  log_info "Removing $STACK external secrets."
+  swarm_secrets=$(docker secret ls | grep "external_$STACK")
+  for swarm_secret in $swarm_secrets; do
+    docker secret rm "$swarm_secret"
+  done
 }
 
 function run_purge {
@@ -247,34 +280,38 @@ function command_tools {
 function command_secret_pull {
   local env="${1:-$ENVIRONMENT}"
   local secret="${2:-$STACK}"
+  local secrets_dir="${3:-$SECRETS}"
 
-  run_secret_pull "$env" "$secret"
+  run_secret_pull "$env" "$secret" "$secrets_dir"
 }
 
 function command_secret_push {
   local env="${1:-$ENVIRONMENT}"
   local secret="${2:-$STACK}"
+  local secrets_dir="${3:-$SECRETS}"
 
   if run_secret_status "$env" "$secret" >/dev/null 2>&1; then
     echo "Local secrets are identical to upstream. Skipping push."
     return 0
   fi
 
-  run_secret_push "$env" "$secret"
+  run_secret_push "$env" "$secret" "$secrets_dir"
 }
 
 function command_secret_status {
   local env="${1:-$ENVIRONMENT}"
   local secret="${2:-$STACK}"
+  local secrets_dir="${3:-$SECRETS}"
 
-  run_secret_status "$env" "$secret"
+  run_secret_status "$env" "$secret" "$secrets_dir"
 }
 
 function command_secret_diff {
   local env="${1:-$ENVIRONMENT}"
   local secret="${2:-$STACK}"
+  local secrets_dir="${3:-$SECRETS}"
 
-  run_secret_status "$env" "$secret" --diff
+  run_secret_status "$env" "$secret" "$secrets_dir" --diff
 }
 
 function command_env {
