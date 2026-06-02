@@ -199,12 +199,12 @@ function run_deploy {
   if [[ -f "$SECRETS/external.yml" ]]; then
     local external_secret_env external_secret external_key
 
-    for external_secret_env in $(yq '.external | keys | .[]' "$SECRETS/external.yml"); do
-      for external_secret in $(yq ".external.$external_secret_env | keys | .[]" "$SECRETS/external.yml"); do
+    for external_secret_env in $(yq -r '.external | keys | .[]' "$SECRETS/external.yml"); do
+      for external_secret in $(yq -r ".external.$external_secret_env | keys | .[]" "$SECRETS/external.yml"); do
         mkdir -p "$SECRETS/$external_secret"
         run_secret_pull "$external_secret_env" "$external_secret" "$SECRETS/$external_secret"
 
-        for external_key in $(yq ".external.$external_secret_env.${external_secret}[]" "$SECRETS/external.yml"); do
+        for external_key in $(yq -r ".external.$external_secret_env.${external_secret}[]" "$SECRETS/external.yml"); do
           if [[ -f "$SECRETS/$external_secret/$external_key" ]]; then
             docker secret create "external_${STACK}.${external_secret}_${external_key//./_}" "$SECRETS/$external_secret/$external_key"
           fi
