@@ -206,7 +206,7 @@ function run_deploy {
 
         for external_key in $(yq -r ".external.$external_secret_env.${external_secret}[]" "$SECRETS/external.yml"); do
           if [[ -f "$SECRETS/$external_secret/$external_key" ]]; then
-            docker secret create "external_${STACK}.${external_secret}_${external_key//./_}" "$SECRETS/$external_secret/$external_key"
+            docker secret create "external_${STACK}.${external_secret}_${external_key//./_}" "$SECRETS/$external_secret/$external_key" > /dev/null
           fi
         done
 
@@ -230,9 +230,9 @@ function run_clean {
   docker stack rm "$STACK" --detach=false
 
   log_info "Removing $STACK external secrets."
-  swarm_secrets=$(docker secret ls | grep "external_$STACK")
+  swarm_secrets=$(docker secret ls --format '{{ .ID }} {{ .Name }}' | grep "external_$STACK" | awk '{print $1}')
   for swarm_secret in $swarm_secrets; do
-    docker secret rm "$swarm_secret"
+    docker secret rm "$swarm_secret" > /dev/null
   done
 }
 
